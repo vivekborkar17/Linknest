@@ -4,7 +4,7 @@ import clientPromise from '@/lib/mongodb'
 import ShareButton from '@/components/ShareButton';
 
 export default async function Page({ params }) {
-    const { handle } =  params
+    const { handle } = await params
     const client = await clientPromise;
     const db = client.db("linknest")
     const collection = db.collection("links")
