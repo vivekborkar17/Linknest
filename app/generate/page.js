@@ -3,6 +3,7 @@ import React from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Image from 'next/image';
 
 
 const Generate =  () => {
@@ -68,7 +69,7 @@ const Generate =  () => {
     
   return (
     
-    <div className="bg-[#254F1A] min-h-[100vh] grid grid-cols-2 ">
+    <div className="bg-[#254F1A] min-h-screen grid grid-cols-2 pb-14 pt-20" >
       <div className="col1 flex flex-col justify-center items-center ml-[10vw] gap-10 mt-[10vh]">
         <h1 className="font-bold text-4xl ">Create Your Linknest</h1>
         <div className="flex flex-col gap-4">
@@ -135,11 +136,9 @@ const Generate =  () => {
         </div>
       </div>
       <div className="col2">
-        <img
-          className="w-full h-screen"
-          src="/generate.png"
-          alt="Generate your page"
-        />
+        <Image src="/generate.png" alt="Generate your page" layout="responsive"
+  width={700} 
+  height={400}/>
       </div>
     </div>
   );

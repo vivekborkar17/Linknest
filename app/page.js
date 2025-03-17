@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from 'next/image';
 
 export default function Home() {
 
@@ -29,7 +30,8 @@ export default function Home() {
 
       </div>
       <div className="justify-center items-start flex flex-col mr-[10vw]">
-        <img src="/home.png" alt="homapage image" />
+        <Image src="/home.png" alt="homapage image" width={20} height={20}/>
+        
 
 
       </div>

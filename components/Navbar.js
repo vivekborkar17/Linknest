@@ -2,6 +2,8 @@
 import Link from 'next/link'
 import React from 'react'
 import { usePathname } from "next/navigation";
+import Image from 'next/image';
+
 
 
 
@@ -16,7 +18,8 @@ const Navbar = () => {
   return <nav className='bg-white w-[80vw] fixed top-10 right-[10vw] rounded-full p-4 flex justify-around items-center' > 
     <div className='logo flex gap-20'> {/* Adjust the width as needed */}
         <Link href={"/"}>
-        <img src="/logo.png" alt="logo" className=' h-20'/>
+        <Image src="/logo.png" alt="logo"  height={70} width={100} />
+        
 
         </Link>
         <ul className='flex gap-10 items-center text-gray-600'>
