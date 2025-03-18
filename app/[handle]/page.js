@@ -1,3 +1,4 @@
+
 import Link from 'next/link'
 import React from 'react'
 import clientPromise from '@/lib/mongodb'
@@ -22,8 +23,8 @@ export default async function Page({ params }) {
         <span className="text-xl font-bold">@{item.handle}</span>
         <span className="des w-[80vh] text-center">{item.desc}</span>
         <div className="links flex flex-col gap-4">
-          {item.links.map((item)=>{
-            return <Link target='_blank' href={item.link}><div className="py-4 flex px-5 items-center justify-center min-w-[40vh] bg-purple-100 rounded-md" key={ item.id}>
+          {item.links.map((item,index)=>{
+            return <Link target='_blank' href={item.link} key={ index}><div className="py-4 flex px-5 items-center justify-center min-w-[40vh] bg-purple-100 rounded-md">
                {item.linktext}
             </div>
             </Link>
