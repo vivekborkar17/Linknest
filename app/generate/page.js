@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from 'next/image';
+import  { Suspense } from "react";
+
 
 
 const Generate =  () => {
