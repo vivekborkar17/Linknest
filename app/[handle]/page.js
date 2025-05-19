@@ -1,4 +1,3 @@
-
 import Link from 'next/link'
 import React from 'react'
 import clientPromise from '@/lib/mongodb'
@@ -8,8 +7,8 @@ import Image from 'next/image';
 export default async function Page({ params }) {
     const { handle } = await params
     const client = await clientPromise;
-    const db = client.db("linknest")
-    const collection = db.collection("links")
+    const db = client.db("linknest");
+    const collection = db.collection("links");
 
     //if handle is already claimed
     const item = await collection.findOne({ handle:handle })

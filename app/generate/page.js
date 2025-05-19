@@ -1,76 +1,15 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from 'next/image';
-import  { Suspense } from "react";
 
 
 
 const Generate =  () => {
-    const searchParams = useSearchParams();
-    const [links, setLinks] = useState([{link: '', linktext: ''}]);
-    const [handle, sethandlle] = useState(searchParams.get("handle"));
-    const [pic, setpic] = useState('');
-    const [desc, setdesc] = useState('');
-
-    const handleChange = (index,link,linktext) => {
-      setLinks((initialLinks)=>{
-        return initialLinks.map((item,i)=>{
-            if(i==index){
-                return {link, linktext}
-            }
-            else{
-                return item
-            }
-        })
-      })
-    }
-    const addLink = (params) => {
-      setLinks(links.concat([{link: '', linktext: ''}]))
-    }
-    
-    
-
-
-
-    const submitLinks = async   ( ) => {
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        
-        const raw = JSON.stringify({
-          "links": links,
-          "handle": handle,
-          "pic": pic,
-          "desc": desc
-        });
-        console.log(raw)
-        
-        const requestOptions = {
-          method: "POST",
-          headers: myHeaders,
-          body: raw,
-          redirect: "follow"
-        };
-        
-        const r = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/add`, requestOptions);
-        const result = await r.json()
-        if(result.success){
-          toast.success(result.message)
-          setLinks([])
-          setpic('')
-          sethandlle('')
-          setdesc('')
-
-        }
-        else{
-            toast.error(result.message)
-        }
-    }
-    
-  return (
-    
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
     <div className="bg-[#254F1A] min-h-screen grid grid-cols-2 pb-14 pt-32" >
       <div className="col1 flex flex-col justify-center items-center ml-[10vw] gap-10 mt-[10vh]">
         <h1 className="font-bold text-4xl ">Create Your Linknest</h1>
@@ -143,6 +82,7 @@ const Generate =  () => {
   height={400}/>
       </div>
     </div>
+    </Suspense>
   );
 };
 
