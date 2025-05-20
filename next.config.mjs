@@ -1,23 +1,27 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     eslint: {
-      ignoreDuringBuilds: true,
+        ignoreDuringBuilds: true,
     },
     typescript: {
-      ignoreBuildErrors: true,
+        ignoreBuildErrors: true,
     },
     images: {
-      remotePatterns: [
-        {
-          protocol: 'http',
-          hostname: '**',
-        },
-        {
-          protocol: 'https',
-          hostname: '**',
-        },
-      ],
+        remotePatterns: [
+            {
+                protocol: 'http',
+                hostname: '**',
+            },
+            {
+                protocol: 'https',
+                hostname: '**',
+            },
+        ],
     },
-  };
-  
-  export default nextConfig;
+    reactStrictMode: true, // Enable strict mode for better debugging
+    experimental: {
+        appDir: true, // Ensure app directory features are enabled
+    },
+};
+
+export default nextConfig;

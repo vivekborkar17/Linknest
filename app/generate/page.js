@@ -40,29 +40,33 @@ const GenerateContent = () => {
             return;
         }
 
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        const raw = JSON.stringify({
-            links,
-            handle,
-            pic,
-            desc,
-            key,
-            displayName,
-            userId,
-        });
-
-        const requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow",
-        };
-
         try {
-            const r = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/add`, requestOptions);
-            const result = await r.json();
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            const raw = JSON.stringify({
+                links,
+                handle,
+                pic,
+                desc,
+                key,
+                displayName,
+                userId,
+            });
+
+            const requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow",
+            };
+
+            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/add`, requestOptions);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
             if (result.success) {
                 toast.success(result.message);
                 setLinks([]);
@@ -76,74 +80,74 @@ const GenerateContent = () => {
                 toast.error(result.message);
             }
         } catch (error) {
-            console.error("Error submitting data:", error);
+            console.error("Error submitting data:", error.message);
             toast.error("An error occurred while submitting the form.");
         }
     };
 
     return (
-        <div className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 min-h-screen grid grid-cols-2 pb-14 pt-32">
-            <div className="col1 flex flex-col justify-center items-center ml-[10vw] gap-10 mt-[10vh]">
-                <h1 className="font-bold text-4xl text-white">Create Your Linknest</h1>
-                <div className="flex flex-col gap-4">
+        <div className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 min-h-screen grid grid-cols-1 md:grid-cols-2 pb-14 pt-32">
+            <div className="col1 flex flex-col justify-center items-center px-6 md:ml-[10vw] gap-10 mt-[10vh]">
+                <h1 className="font-bold text-3xl md:text-4xl text-white text-center">Create Your Linknest</h1>
+                <div className="flex flex-col gap-4 w-full max-w-md">
                     <div className="item">
-                        <h1 className="font-semibold text-2xl text-white">
+                        <h1 className="font-semibold text-xl md:text-2xl text-white">
                             Step 1: Add your social handle links
                         </h1>
                         <input
-                            className="px-4 py-2 bg-white rounded-4xl shadow-md"
+                            className="w-full px-4 py-2 bg-white rounded-4xl shadow-md"
                             type="text"
                             value={handle || ""}
                             onChange={e => { setHandle(e.target.value); }}
                             placeholder="Choose a Handle"
                         />
                     </div>
-                    <h1 className="font-semibold text-2xl text-white">Step 2: Add your display name</h1>
+                    <h1 className="font-semibold text-xl md:text-2xl text-white">Step 2: Add your display name</h1>
                     <input
-                        className="px-4 py-2 bg-white rounded-4xl shadow-md"
+                        className="w-full px-4 py-2 bg-white rounded-4xl shadow-md"
                         type="text"
                         value={displayName || ""}
                         onChange={e => { setDisplayName(e.target.value); }}
                         placeholder="Enter display name"
                     />
-                    <h1 className="font-semibold text-2xl text-white">Step 3: Add your links</h1>
-                    {links && links.map((item, index) => {
-                        return <div key={index} className="item flex gap-4">
+                    <h1 className="font-semibold text-xl md:text-2xl text-white">Step 3: Add your links</h1>
+                    {links && links.map((item, index) => (
+                        <div key={index} className="item flex flex-col md:flex-row gap-4">
                             <input
-                                className="px-4 py-2 bg-white rounded-4xl shadow-md"
+                                className="w-full px-4 py-2 bg-white rounded-4xl shadow-md"
                                 type="text"
                                 value={item.link || ""}
                                 onChange={e => { handleChange(index, e.target.value, item.linktext); }}
                                 placeholder="Enter link"
                             />
                             <input
-                                className="px-4 py-2 bg-white rounded-4xl shadow-md"
+                                className="w-full px-4 py-2 bg-white rounded-4xl shadow-md"
                                 type="text"
                                 value={item.linktext || ""}
                                 onChange={e => { handleChange(index, item.link, e.target.value); }}
                                 placeholder="Enter link text"
                             />
-                        </div>;
-                    })}
+                        </div>
+                    ))}
                     <button
                         onClick={addLink}
                         className="bg-purple-700 text-white py-2 px-6 rounded-full shadow-md hover:bg-purple-800 transition-all"
                     >
                         + Add Link
                     </button>
-                    <h1 className="font-semibold text-2xl text-white">
+                    <h1 className="font-semibold text-xl md:text-2xl text-white">
                         Step 4: Add a profile picture and description
                     </h1>
-                    <div className="item flex flex-col gap-5 ">
+                    <div className="item flex flex-col gap-5">
                         <input
-                            className="px-4 py-2 bg-white rounded-4xl shadow-md"
+                            className="w-full px-4 py-2 bg-white rounded-4xl shadow-md"
                             type="text"
                             value={pic || ""}
                             onChange={e => { setPic(e.target.value); }}
                             placeholder="Enter link to your picture"
                         />
                         <input
-                            className="px-4 py-2 bg-white rounded-4xl shadow-md"
+                            className="w-full px-4 py-2 bg-white rounded-4xl shadow-md"
                             type="text"
                             value={desc || ""}
                             onChange={e => { setDesc(e.target.value); }}
@@ -157,11 +161,11 @@ const GenerateContent = () => {
                             Create your Linknest
                         </button>
                     </div>
-                    <h1 className="font-semibold text-2xl text-white">
+                    <h1 className="font-semibold text-xl md:text-2xl text-white">
                         Step 5: Add a key for editing or deleting the page
                     </h1>
                     <input
-                        className="px-4 py-2 bg-white rounded-4xl shadow-md"
+                        className="w-full px-4 py-2 bg-white rounded-4xl shadow-md"
                         type="text"
                         value={key || ""}
                         onChange={e => setKey(e.target.value)}
@@ -171,7 +175,7 @@ const GenerateContent = () => {
                     <ToastContainer />
                 </div>
             </div>
-            <div className="col2">
+            <div className="col2 hidden md:flex justify-center items-center">
                 <Image src="/generate.png" alt="Generate your page" layout="responsive" width={700} height={400} unoptimized />
             </div>
         </div>
