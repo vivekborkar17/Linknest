@@ -8,6 +8,26 @@ import Image from 'next/image';
 
 
 const Generate =  () => {
+    const [handle, setHandle] = useState(""); // Declare handle state
+    const [links, setLinks] = useState([{ link: "", linktext: "" }]); // Initialize links state
+    const [pic, setPic] = useState(""); // Initialize pic state
+    const [desc, setDesc] = useState(""); // Initialize desc state
+
+    const handleChange = (index, link, linktext) => {
+        const updatedLinks = [...links];
+        updatedLinks[index] = { link, linktext };
+        setLinks(updatedLinks);
+    };
+
+    const addLink = () => {
+        setLinks([...links, { link: "", linktext: "" }]);
+    };
+
+    const submitLinks = () => {
+        // Add logic to submit links
+        toast.success("Links submitted successfully!");
+    };
+
     return (
         <Suspense fallback={<div>Loading...</div>}>
     <div className="bg-[#254F1A] min-h-screen grid grid-cols-2 pb-14 pt-32" >
@@ -22,7 +42,7 @@ const Generate =  () => {
               className="px-4 py-2 bg-white rounded-4xl"
               type="text"
               value={handle || ""}
-              onChange={e=>{sethandlle(e.target.value)}}
+              onChange={e => setHandle(e.target.value)} // Fix function name
               placeholder="Choose a Handle"
             />
           </div>
@@ -57,14 +77,14 @@ const Generate =  () => {
               className="px-4 py-2 bg-white rounded-4xl"
               type="text"
               value={pic || ""}
-              onChange={e=>{setpic(e.target.value)}}
+              onChange={e=>{setPic(e.target.value)}}
               placeholder="Enter link your picture"
             />
             <input
               className="px-4 py-2 bg-white rounded-4xl"
               type="text"
               value={desc || ""}
-              onChange={e=>{setdesc(e.target.value)}}
+              onChange={e=>{setDesc(e.target.value)}}
               placeholder="Enter your description"
             />
             <button disabled={pic==""|| handle=="" || links[0].linktext==""} onClick={()=>{submitLinks()}} className="bg-slate-900 disabled:bg-slate-700 w-fit text-white py-2  rounded-full px-10 font-semibold mx-2">
